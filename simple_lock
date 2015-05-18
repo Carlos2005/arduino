@@ -1,0 +1,54 @@
+#define Led1 4 //Actif HIGH
+#define Led1on digitalWrite(Led1, 1)
+#define Led1off digitalWrite(Led1, 0)
+
+#define Led2 5 //Actif HIGH
+#define Led2on digitalWrite(Led2, 1)
+#define Led2off digitalWrite(Led2, 0)
+
+#define P1 2 // actif à 0 
+#define PousOn1 !digitalRead(P1)
+
+#define P2 3 // actif à 0 
+#define PousOn2 !digitalRead(P2)
+
+#define INPUT 0
+#define OUTPUT 1
+
+unsigned int counter1 = 0;
+unsigned int counter2 = 0;
+unsigned int PlaceInCode = 0;
+
+void setup() { 
+  pinMode (P1,INPUT); 
+  pinMode (P2,INPUT);
+  pinMode (Led1,OUTPUT); 
+  pinMode (Led2,OUTPUT); 
+} 
+void loop () { 
+  
+Led1off;
+
+  if (PousOn1 && PlaceInCode == 0) PlaceInCode = 1;	
+  
+  if (!PousOn2 && PlaceInCode == 1) PlaceInCode = 2;
+	 
+	
+  if (PousOn1 && PlaceInCode == 2) PlaceInCode = 3;
+  
+  if (PousOn2 && PousOn1 && PlaceInCode == 3) PlaceInCode = 4;
+  
+  if (!PousOn2 && PlaceInCode == 4) PlaceInCode = 5;
+  
+  if (!PousOn1 && PlaceInCode == 5 )
+	{
+		Led1on;
+		delay(3000);
+		Led1off;
+		PlaceInCode=0;
+		delay(1000);
+	}
+
+ delay(20);
+	
+}
